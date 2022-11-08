@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <limits.h>
 
-int main(/int argc, int argv/){ 
+int main(){ 
     int s;
 
     printf("Numero maximo de enlaces: %d\n", fpathconf(s,_PC_LINK_MAX));
