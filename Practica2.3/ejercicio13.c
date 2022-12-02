@@ -19,12 +19,14 @@ void handler(int signal){
 int main(int argc, char ** argv) {
 
     if(argc < 2){
-            printf("ERROR: Introduce el comando \n");
+            printf("ERROR: Introduce tiempo de alarma\n");
     }
 
     sigset_t mask;
     sigemptyset(&mask);
     sigaddset(&mask, SIGUSR1);
+    sigprocmask(SIG_UNBLOCK, &mask, NULL);
+
 
     int restante = atoi(argv[1]);
     int alarma = alarm(restante);
@@ -35,17 +37,17 @@ int main(int argc, char ** argv) {
     sigaction(SIGUSR1, &act, NULL);
 
     int i = 0;
-    while(i < alarma && stop == 0){
+    while(alarma>0 && stop == 0){
         i++;
         sleep(1);
     }
 
     if(stop == 0){
-        unlink(argv[0]);
         printf("Proceso terminado \n");
+        unlink(argv[0]);
     }
     else{
-        printf("Aqui estamos \n");
+        printf("Se paro la cuenta atras por la señal SIGUSR \n");
     }
     return 0;
 }
